@@ -277,6 +277,8 @@ If you haven't had time to finish the exercises above, please ask for help befor
 
 1.  Recreate the following plot, and interpret what you see in context of the data.
 
+Most of the data based on the continents are scattered within each other, so there is no correlation within the continents. Coastal population proportion and plastic waste per capita have somewhat of a positive relationship but has a very weak correlation.
+
 ```{r echo=FALSE, message=FALSE, eval=TRUE, warning=FALSE}
 plastic_waste %>% 
   mutate(coastal_pop_prop = coastal_pop / total_pop) %>%
