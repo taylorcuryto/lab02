@@ -1,5 +1,6 @@
 ---
 title: "Lab 02 - Global plastic waste"
+author: "Taylor Curyto"
 output: 
   tufte::tufte_html:
     tufte_variant: "envisioned"
@@ -48,6 +49,7 @@ Run the following code in the Console to load this package.
 
 ```{r load-packages, message=FALSE, eval=TRUE}
 library(tidyverse)
+library(readr)
 ```
 
 ## Data
@@ -75,13 +77,23 @@ The variable descriptions are as follows:
 # Warm up
 
 -   Recall that RStudio is divided into four panes. Without looking, can you name them all and briefly describe their purpose?
+
+console pane - where you can enter commands or see the outputs
+sourse pane - where you write and edit your code
+environment/history pane - displays all the comands ran
+files/plots/packages/viewer pane - has all the files apart of the repository, view plots created, manage the packages, nd displays the content
+
 -   Verify that the dataset has loaded into the Environment. How many observations are in the dataset? Clicking on the dataset in the Environment will allow you to inspect it more carefully. Alternatively, you can type `View(plastic_waste)` into the Console to do this.
+
+240 observations
 
 ```{marginfigure}
 **Hint:** If you're not sure, run the command `?NA` which will lead you to the documentation.
 ```
 
 -   Have a quick look at the data and notice that there are cells taking the value `NA` -- what does this mean?
+
+The observation doesn't have a known value for those specific variables
 
 # Exercises
 
@@ -100,10 +112,22 @@ plastic_waste %>%
   filter(plastic_waste_per_cap > 3.5)
 ```
 
-Did you expect this result?
+Did you expect this result? No, I am not very familiar with this country, I would have assumed it was USA.
+
 You might consider doing some research on Trinidad and Tobago to see why plastic waste per capita is so high there, or whether this is a data error.
 
 1.  Plot, using histograms, the distribution of plastic waste per capita faceted by continent. What can you say about how the continents compare to each other in terms of their plastic waste per capita?
+
+The plastic waste per capita for all the areas are very similar from one another
+
+```{r plastic_waste_per_cap-hist2, eval=TRUE}
+ggplot(data = plastic_waste, aes(x = plastic_waste_per_cap)) +
+  geom_histogram(binwidth = 5, color="yellow") +
+  facet_wrap(~ continent) +
+  labs(title = "Distribution of Plastic Waste per Capita by Continent",
+       x = "Plastic Waste per Capita",
+       y = "Frequency")
+```
 
 ```{marginfigure}
 **NOTE:** From this point onwards the plots and the output of the code are not displayed in the lab instructions, but you can and should the code and view the results yourself.
@@ -152,7 +176,17 @@ This still doesn't look great...
 
 1.  Recreate the density plots above using a different (lower) alpha level that works better for displaying the density curves for all continents.
 
+```{r plastic_waste_per_cap-dens-color-fill-alpha2}
+ggplot(data = plastic_waste, 
+       mapping = aes(x = plastic_waste_per_cap, 
+                     color = continent, 
+                     fill = continent)) +
+  geom_density(alpha = 0.3)
+```
+
 2.  Describe why we defined the `color` and `fill` of the curves by mapping aesthetics of the plot but we defined the `alpha` level as a characteristic of the plotting geom.
+
+The alpha value is not directly tied to the data. color and fill are equal to variables in the dataset while the alpha value is equal to numbers that are not tied to the variables in any way.
 
 🧶 ✅ ⬆️ *Now is a good time to knit your document and commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
@@ -216,3 +250,4 @@ plastic_waste %>%
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
 
 Once you're done, submit a PDF copy of the lab to moodle. 
+
